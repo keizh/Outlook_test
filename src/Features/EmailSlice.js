@@ -110,11 +110,13 @@ const EmailSlice = createSlice({
       state.readEmail = action.payload.readEmail;
       state.unreadEmail = action.payload.unreadEmail;
       state.favoriteEmail = action.payload.favoriteEmail;
-      state.limit = action.payload.MetaData.limit;
-      state.total = action.payload.MetaData.total;
-      state.currenPage = action.payload.MetaData.currenPage;
-      state.totalPages = action.payload.MetaData.totalPages;
-      state.hasMore = action.payload.MetaData.hasMore;
+      if (action.payload.MetaData) {
+        state.limit = action.payload.MetaData.limit;
+        state.total = action.payload.MetaData.total;
+        state.currenPage = action.payload.MetaData.currenPage;
+        state.totalPages = action.payload.MetaData.totalPages;
+        state.hasMore = action.payload.MetaData.hasMore;
+      }
     },
     setActiveBTN: (state, action) => {
       state.activeBTN = action.payload;

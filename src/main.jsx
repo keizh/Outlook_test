@@ -19,14 +19,14 @@ const router = createBrowserRouter([
       let readEmail = localStorage.getItem(`readEmail`);
       let unreadEmail = localStorage.getItem(`unreadEmail`);
       let MetaData = localStorage.getItem(`MetaData`);
-      if (favoriteEmail && readEmail && unreadEmail && MetaData) {
+      if (favoriteEmail || readEmail || unreadEmail || MetaData) {
         console.log(`no fetch`);
         store.dispatch(
           setFROMLocalStorage({
-            favoriteEmail: JSON.parse(favoriteEmail),
-            readEmail: JSON.parse(readEmail),
-            unreadEmail: JSON.parse(unreadEmail),
-            MetaData: JSON.parse(MetaData),
+            favoriteEmail: favoriteEmail ? JSON.parse(favoriteEmail) : [],
+            readEmail: readEmail ? JSON.parse(readEmail) : [],
+            unreadEmail: unreadEmail ? JSON.parse(unreadEmail) : [],
+            MetaData: MetaData ? JSON.parse(MetaData) : null,
           })
         );
       } else {

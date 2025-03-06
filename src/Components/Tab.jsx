@@ -10,8 +10,9 @@ import {
 function Tab({ ele }) {
   const d = new moment(ele.date);
   const dispatch = useDispatch();
-  const { activeEmail, activeBTN, hasMore, unreadEmail, usedCheat } =
-    useSelector((store) => store.email);
+  const { activeEmail, hasMore, unreadEmail } = useSelector(
+    (store) => store.email
+  );
 
   const handler = () => {
     dispatch(fetchSpecificEMAIL(ele));
@@ -19,7 +20,7 @@ function Tab({ ele }) {
     dispatch(readEmailAdded(ele));
     // }
     // check trick
-    if (unreadEmail.length <= 4 && hasMore && !usedCheat) {
+    if (unreadEmail.length === 1 && hasMore) {
       console.log(`cheap trick played`);
       store.dispatch(fetchEMAILs({ cheat_used: true }));
     }
@@ -62,4 +63,4 @@ function Tab({ ele }) {
   );
 }
 
-export default Tab;
+export default React.memo(Tab, (prev, next) => prev.ele.id === next.ele.id);
