@@ -1,7 +1,13 @@
 import React from "react";
-
+import Navigation from "./Components/Navigation";
+import DiplaySection from "./Components/DiplaySection";
 function App() {
-  return <div></div>;
+  return (
+    <main>
+      <Navigation />
+      <DiplaySection />
+    </main>
+  );
 }
 
 export default App;

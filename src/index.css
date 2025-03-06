@@ -2,4 +2,101 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+main {
+  background-color: #f4f5f9;
+  height: 100vh;
+  padding-top: 40px;
+  padding-inline: 70px;
+  display: flex;
+  flex-direction: column;
+  /* overflow-y: hidden; */
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 30px;
+  height: 10vh;
+}
+
+nav span,
+nav button {
+  font-weight: bold;
+}
+
+button {
+  border-radius: 100px;
+  padding: 5px;
+  padding-inline: 14px;
+  background-color: #f4f5f9;
+  border: none;
+  cursor: pointer;
+}
+
+.active-button {
+  background-color: #e1e4ea;
+}
+
+.DisplaySection {
+  display: flex;
+  flex-direction: row;
+  height: 85vh;
+}
+
+.ListOfEmails {
+  width: 50%;
+  min-height: 80vh;
+  overflow-y: scroll;
+}
+
+.ListOfEmails::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  width: 100%;
+  padding-inline: 20px;
+  padding-block: 8px;
+  height: 15vh;
+  border: 1px solid #cfd2dc;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  overflow-x: hidden;
+  margin-bottom: 30px;
+}
+
+.profile {
+  background-color: #e54065;
+  padding: 25px;
+  border-radius: 100%;
+  position: relative;
+}
+
+.profile span {
+  position: absolute;
+  color: white;
+  font-size: 30px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.tab_light {
+  color: #636363;
+}
+.tab_bold {
+  color: black;
+  font-weight: 500;
+}
+
+.text_whiteSpace_no_wrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

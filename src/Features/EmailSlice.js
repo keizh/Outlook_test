@@ -41,6 +41,7 @@ export const fetchSpecificEMAIL = createAsyncThunk(
 const EmailSlice = createSlice({
   name: "EmailSlice",
   initialState: {
+    activeBTN: "Unread",
     status: "idle", //  loading ,  successful , error
     error: null,
     unreadEmail: [],
@@ -88,6 +89,9 @@ const EmailSlice = createSlice({
       state.unreadEmail = action.payload.unreadEmail;
       state.favoriteEmail = action.payload.favoriteEmail;
     },
+    setActiveBTN: (state, action) => {
+      state.activeBTN = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -105,6 +109,7 @@ const EmailSlice = createSlice({
           state.total = action.payload.total;
           state.limit = action.payload.list.length;
         }
+        // storing Meta each time a new page was fetched
         localStorage.setItem(
           "MetaData",
           JSON.stringify({
@@ -146,4 +151,5 @@ export const {
   favoriteEmailAdded,
   closeEmail,
   setFROMLocalStorage,
+  setActiveBTN,
 } = EmailSlice.actions;
