@@ -1,17 +1,36 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
-import { fetchSpecificEMAIL } from "../Features/EmailSlice";
+import store from "../App/store";
+import {
+  fetchSpecificEMAIL,
+  readEmailAdded,
+  fetchEMAILs,
+} from "../Features/EmailSlice";
 function Tab({ ele }) {
   const d = new moment(ele.date);
   const dispatch = useDispatch();
-  const { activeEmail } = useSelector((store) => store.email);
+  const { activeEmail, activeBTN, hasMore, unreadEmail, usedCheat } =
+    useSelector((store) => store.email);
+
+  const handler = () => {
+    dispatch(fetchSpecificEMAIL(ele));
+    // if (activeBTN == "Unread") {
+    dispatch(readEmailAdded(ele));
+    // }
+    // check trick
+    if (unreadEmail.length <= 4 && hasMore && !usedCheat) {
+      console.log(`cheap trick played`);
+      store.dispatch(fetchEMAILs({ cheat_used: true }));
+    }
+  };
+
   return (
     <div
       className={`tab ${
         activeEmail == null ? "" : activeEmail.id == ele.id ? "bg_white" : ""
       }`}
-      onClick={() => dispatch(fetchSpecificEMAIL(ele))}
+      onClick={handler}
     >
       <aside className="tab_left">
         <div className="profile">
@@ -34,9 +53,9 @@ function Tab({ ele }) {
         <p className="tab_light text_whiteSpace_no_wrap">
           {ele.short_description}
         </p>
-        <div>
+        <div style={{ display: "flex", gap: "20px" }}>
           <p className="tab_light">{d.format("L") + " " + d.format("LT")}</p>
-          {ele.favorite && <span>Favorite</span>}
+          {ele.isFavorite && <span style={{ color: "#e54065" }}>Favorite</span>}
         </div>
       </section>
     </div>

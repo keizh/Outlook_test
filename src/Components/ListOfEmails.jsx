@@ -24,7 +24,7 @@ function ListOfEmails() {
           dataLength={unreadEmail.length}
           next={() => {
             console.log(`vrerefrefregre`);
-            dispatch(fetchEMAILs());
+            dispatch(fetchEMAILs({ cheat_used: false }));
           }}
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
@@ -43,7 +43,7 @@ function ListOfEmails() {
 
       {activeBTN === "Read" &&
         readEmail.length > 0 &&
-        favoriteEmail.map((ele) => <Tab key={ele.id} ele={ele} />)}
+        readEmail.map((ele) => <Tab key={ele.id} ele={ele} />)}
 
       {activeBTN === "Read" && readEmail.length == 0 && (
         <span>No Read Emails</span>

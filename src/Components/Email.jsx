@@ -1,10 +1,22 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment/moment";
-import { closeEmail } from "../Features/EmailSlice";
+import {
+  closeEmail,
+  unfavoriteEmail,
+  favoriteEmailAdded,
+} from "../Features/EmailSlice";
 function Email() {
   const { activeEmail } = useSelector((store) => store.email);
   const dispatch = useDispatch();
+  const favoriteHandler = () => {
+    console.log(`vreerg`);
+    if (activeEmail.isFavorite) {
+      dispatch(unfavoriteEmail(activeEmail));
+    } else {
+      dispatch(favoriteEmailAdded(activeEmail));
+    }
+  };
   if (activeEmail == null) {
     return <div></div>;
   } else {
@@ -20,7 +32,7 @@ function Email() {
           <div className="right">
             <div className="topper">
               <h2>{activeEmail.subject}</h2>
-              <button className="favorite_btn">
+              <button className="favorite_btn" onClick={favoriteHandler}>
                 {activeEmail.isFavorite ? (
                   <span>Remove Favorite</span>
                 ) : (

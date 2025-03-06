@@ -2,7 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchEMAILs = createAsyncThunk(
   "fetch/emails",
-  async (_, { getState, rejectWithValue }) => {
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    if (data && data.cheat_used) {
+      dispatch(setCheat());
+    }
     try {
       const res = await fetch(
         `https://flipkart-email-mock.vercel.app/?page=${
@@ -54,28 +57,47 @@ const EmailSlice = createSlice({
     currenPage: 0,
     total: 0,
     limit: 0,
+    usedCheat: false,
   },
   reducers: {
     readEmailAdded: (state, action) => {
       // you can write mutating logic in reducers thanks to Immer library
-      state.readEmail.push(action.payload);
-      localStorage.setItem("readEmail", JSON.stringify(state.readEmail));
-      state.unreadEmail = state.unreadEmail.filter(
-        (ele) => ele.id != action.payload.id
-      );
-      localStorage.setItem("unreadEmail", JSON.stringify(state.unreadEmail));
+      if (state.activeBTN == "Unread") {
+        state.readEmail.push(action.payload);
+        localStorage.setItem("readEmail", JSON.stringify(state.readEmail));
+        state.unreadEmail = state.unreadEmail.filter(
+          (ele) => ele.id != action.payload.id
+        );
+        localStorage.setItem("unreadEmail", JSON.stringify(state.unreadEmail));
+      }
     },
     favoriteEmailAdded: (state, action) => {
-      state.favoriteEmail.push(action.payload);
+      console.log(`getting it`);
+      // console.log(state.readEmail);
+      state.activeEmail.isFavorite = true;
+      state.readEmail = state.readEmail.map((ele) => {
+        if (ele.id == action.payload.id) {
+          ele.isFavorite = true;
+        }
+        return ele;
+      });
+      state.favoriteEmail = state.readEmail.filter((ele) => ele.isFavorite);
       localStorage.setItem(
         "favoriteEmail",
         JSON.stringify(state.favoriteEmail)
       );
     },
-    unfavoriteEmailAdded: (state, action) => {
+    unfavoriteEmail: (state, action) => {
+      state.readEmail = state.readEmail.map((ele) => {
+        if (ele.id == action.payload.id) {
+          ele.isFavorite = false;
+        }
+        return ele;
+      });
       state.favoriteEmail = state.favoriteEmail.filter(
         (ele) => ele.id != action.payload.id
       );
+      state.activeEmail.isFavorite = false;
       localStorage.setItem(
         "favoriteEmail",
         JSON.stringify(state.favoriteEmail)
@@ -96,6 +118,9 @@ const EmailSlice = createSlice({
     },
     setActiveBTN: (state, action) => {
       state.activeBTN = action.payload;
+    },
+    setCheat: (state) => {
+      state.cheat_used = true;
     },
   },
   extraReducers: (builder) => {
@@ -158,7 +183,9 @@ export default EmailSlice;
 export const {
   readEmailAdded,
   favoriteEmailAdded,
+  unfavoriteEmail,
   closeEmail,
   setFROMLocalStorage,
   setActiveBTN,
+  setCheat,
 } = EmailSlice.actions;
