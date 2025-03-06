@@ -8,7 +8,7 @@
 main {
   background-color: #f4f5f9;
   height: 100vh;
-  padding-top: 40px;
+  padding-top: 0px;
   padding-inline: 70px;
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@ nav {
   display: flex;
   gap: 20px;
   align-items: center;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   height: 10vh;
 }
 
@@ -44,13 +44,22 @@ button {
 .DisplaySection {
   display: flex;
   flex-direction: row;
-  height: 85vh;
+  height: 90vh;
+  justify-content: space-between;
 }
 
+/* LIST OF EMAIL  */
+
 .ListOfEmails {
-  width: 50%;
+  width: 100%;
   min-height: 80vh;
   overflow-y: scroll;
+  padding-bottom: 50px;
+}
+
+.ListOfEmails.email {
+  width: 35%;
+  background-color: #f4f5f9;
 }
 
 .ListOfEmails::-webkit-scrollbar {
@@ -69,6 +78,8 @@ button {
   gap: 10px;
   overflow-x: hidden;
   margin-bottom: 30px;
+  cursor: pointer;
+  background-color: white;
 }
 
 .profile {
@@ -96,7 +107,71 @@ button {
 }
 
 .text_whiteSpace_no_wrap {
-  overflow: hidden;
+  /* overflow: hidden; */
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* EMAIL SCREEN */
+
+.email {
+  padding: 20px;
+
+  width: 65%;
+}
+
+.emial_Content {
+  background-color: white;
+  border-radius: 20px;
+  height: 100%;
+  width: 100%;
+  padding: 30px;
+  display: flex;
+}
+
+.bg_white {
+  background-color: #f4f5f9;
+}
+
+.emial_Content > .left {
+  margin-right: 20px;
+}
+
+.emial_Content > .right {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 25px;
+}
+
+.emial_Content > .right > .topper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.favorite_btn {
+  background-color: #e54065;
+  color: white;
+}
+
+.email_body {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.email_body::-webkit-scrollbar {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.email_body > section > div {
+  overflow-y: auto;
+}
+
+.email_body > section > div::-webkit-scrollbar {
+  display: none;
+}
+
+.email_body > section > div > p {
+  margin-bottom: 20px;
 }

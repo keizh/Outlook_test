@@ -1,8 +1,18 @@
 import React from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment/moment";
+import { fetchSpecificEMAIL } from "../Features/EmailSlice";
 function Tab({ ele }) {
+  const d = new moment(ele.date);
+  const dispatch = useDispatch();
+  const { activeEmail } = useSelector((store) => store.email);
   return (
-    <div className="tab">
+    <div
+      className={`tab ${
+        activeEmail == null ? "" : activeEmail.id == ele.id ? "bg_white" : ""
+      }`}
+      onClick={() => dispatch(fetchSpecificEMAIL(ele))}
+    >
       <aside className="tab_left">
         <div className="profile">
           <span>{ele.from.name[0].toUpperCase()}</span>
@@ -25,7 +35,7 @@ function Tab({ ele }) {
           {ele.short_description}
         </p>
         <div>
-          <p className="tab_light">{ele.date}</p>
+          <p className="tab_light">{d.format("L") + " " + d.format("LT")}</p>
           {ele.favorite && <span>Favorite</span>}
         </div>
       </section>

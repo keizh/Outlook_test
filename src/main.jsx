@@ -18,13 +18,15 @@ const router = createBrowserRouter([
       let favoriteEmail = localStorage.getItem(`favoriteEmail`);
       let readEmail = localStorage.getItem(`readEmail`);
       let unreadEmail = localStorage.getItem(`unreadEmail`);
-      if (favoriteEmail && readEmail && unreadEmail) {
+      let MetaData = localStorage.getItem(`MetaData`);
+      if (favoriteEmail && readEmail && unreadEmail && MetaData) {
         console.log(`no fetch`);
         store.dispatch(
           setFROMLocalStorage({
             favoriteEmail: JSON.parse(favoriteEmail),
             readEmail: JSON.parse(readEmail),
             unreadEmail: JSON.parse(unreadEmail),
+            MetaData: JSON.parse(MetaData),
           })
         );
       } else {
@@ -32,6 +34,7 @@ const router = createBrowserRouter([
         localStorage.removeItem(`favoriteEmail`);
         localStorage.removeItem(`readEmail`);
         localStorage.removeItem(`unreadEmail`);
+        localStorage.removeItem(`MetaData`);
         store.dispatch(fetchEMAILs());
       }
     },

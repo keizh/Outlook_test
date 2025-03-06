@@ -88,6 +88,11 @@ const EmailSlice = createSlice({
       state.readEmail = action.payload.readEmail;
       state.unreadEmail = action.payload.unreadEmail;
       state.favoriteEmail = action.payload.favoriteEmail;
+      state.limit = action.payload.MetaData.limit;
+      state.total = action.payload.MetaData.total;
+      state.currenPage = action.payload.MetaData.currenPage;
+      state.totalPages = action.payload.MetaData.totalPages;
+      state.hasMore = action.payload.MetaData.hasMore;
     },
     setActiveBTN: (state, action) => {
       state.activeBTN = action.payload;
@@ -100,7 +105,11 @@ const EmailSlice = createSlice({
       })
       .addCase(fetchEMAILs.fulfilled, (state, action) => {
         state.status = "successful";
-        state.unreadEmail = action.payload.list;
+        state.unreadEmail.push(...action.payload.list);
+        state.unreadEmail = state.unreadEmail.map((ele) => {
+          ele.isFavorite = false;
+          return ele;
+        });
         state.currenPage = state.currenPage + 1;
         state.hasMore = state.currenPage < state.totalPages;
         // storing unreadEmail each time a new page was fetched
